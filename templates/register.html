@@ -51,16 +51,6 @@
   firebase.initializeApp(firebaseConfig);
   firebase.analytics();
 </script>
-<script>
-	const auth = firebase.auth();
-	var credentials;
-	auth.onAuthStateChanged(function(user) {
-		credentials = user;
-		if(credentials != null) {
-			window.location.href = "/records";
-		}
-	});
-</script>
 	<!-- ? Preloader Start -->
 	<div id="preloader-active">
 		<div class="preloader d-flex align-items-center justify-content-center">
@@ -335,9 +325,39 @@
 		
 		<!-- Jquery Plugins, main Jquery -->	
 		<script src="/static/assets/js/plugins.js"></script>
-		<script src="/static/assets/js/main.js"></script>
+		<script src="/static/assets/js/main.js?v=2"></script>
 		
 		
+		<script>
+			const auth = firebase.auth();
+			var credentials;
+			var resolvedCredentials = false;
+			var windowLoaded = false;
+			auth.onAuthStateChanged(function(user) {
+				credentials = user;
+				if(credentials != null) {
+					window.location.href = "/records";
+				} else {
+					resolvedCredentials = true;
+					if(windowLoaded && resolvedCredentials) {
+						$('#preloader-active').delay(450).fadeOut('slow');
+						$('body').delay(450).css({
+							'overflow': 'visible'
+						});
+					}
+				}
+			});
+			$(window).on('load', function () {
+				windowLoaded = true;
+				if(windowLoaded && resolvedCredentials) {
+					$('#preloader-active').delay(450).fadeOut('slow');
+					$('body').delay(450).css({
+						'overflow': 'visible'
+					});
+				}
+			});
+			
+		</script>
 		
 	</body>
 	</html>

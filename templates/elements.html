@@ -915,9 +915,17 @@
 								
 								<!-- Jquery Plugins, main Jquery -->	
 								<script src="/static/assets/js/plugins.js"></script>
-								<script src="/static/assets/js/main.js"></script>
+								<script src="/static/assets/js/main.js?v=2"></script>
 								
 								
+								<script>
+									$(window).on('load', function () {
+										$('#preloader-active').delay(450).fadeOut('slow');
+										$('body').delay(450).css({
+											'overflow': 'visible'
+										});
+									});
+								</script>
 								
 							</body>
 							</html>
