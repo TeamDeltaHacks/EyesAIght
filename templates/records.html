@@ -234,6 +234,7 @@
 			}
 			.record > p {
 				margin: 0;
+				text-align: left;
 			}
 			.record-1 {
 				border: 3px solid #f4e700;
@@ -302,7 +303,7 @@
 								`;
 							}
 						});
-						container.innerHTML = domEls.join("");
+						container.innerHTML = "<center>" + domEls.join("") + "</center>";
 					});
 					resolvedCredentials = true;
 					if(windowLoaded && resolvedCredentials) {
