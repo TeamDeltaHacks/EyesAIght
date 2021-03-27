@@ -875,6 +875,26 @@
 
 								<!-- JS here -->
 
+								<script>
+									const db = firebase.firestore();
+
+									let dbRef;
+									let dbUnsubscribe;
+
+									const authenticated = (user) => {
+										dbRef = db.collection("records");
+										dbUnsubscribe = dbRef
+											.where("uid", "==", user.uid)
+											.orderBy("createdAt")
+											.onSnapshot((snapshot) => {
+												let elements = snapshot.docs.map(document => {
+													return document.data();
+												});
+												console.log(elements);
+											})
+									}
+								</script>
+
 								<script src="/static/assets/js/vendor/modernizr-3.5.0.min.js"></script>
 								<!-- Jquery, Popper, Bootstrap -->
 								<script src="/static/assets/js/vendor/jquery-1.12.4.min.js"></script>
@@ -931,6 +951,7 @@
 											document.getElementById("nav-sign-in").remove();
 											document.getElementById("nav-sign-up").innerHTML = '<a href="javascript:auth.signOut();" class="btn">Sign Out</a>';
 											resolvedCredentials = true;
+											authenticated && authenticated(credentials);
 											if(windowLoaded && resolvedCredentials) {
 												$('#preloader-active').delay(450).fadeOut('slow');
 												$('body').delay(450).css({
