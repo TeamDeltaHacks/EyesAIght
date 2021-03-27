@@ -166,8 +166,8 @@
 								<div class="form" id="form" style="margin-bottom: 10px;">
 									
 								</div>
+								<div class="genric-btn primary" id="btn-submit">Submit</div>
 							</center>
-							<p id="text-error" style="color: #ff0000; margin-top:10px;"></p>
 						</div>
 						<div class="col-lg-2 col-md-1"></div>
 					</div>
@@ -327,20 +327,29 @@
 		<script src="/static/assets/js/main.js?v=2"></script>
 
 		<script>
+			const submitButton = document.getElementById("btn-submit");
+			const form = document.getElementById("form");
+			let currentType;
+
 			const switchRecord = (type) => {
+				currentType = type;
 				if(type == 1) {
-					document.getElementById("form").innerHTML = `<p><b>Report:</b></p>
+					form.innerHTML = `<p><b>Report:</b></p>
 						<div class="mt-10">
 							<textarea class="single-textarea" placeholder="Report" onfocus="this.placeholder = ''"
 							onblur="this.placeholder = 'Report'" required></textarea>
 						</div>`;
 				} else if(type == 2) {
-					document.getElementById("form").innerHTML = ``;
+					form.innerHTML = ``;
 				} else if(type == 3) {
-					document.getElementById("form").innerHTML = ``;
+					form.innerHTML = ``;
 				} else {
-					document.getElementById("form").innerHTML = ``;
+					form.innerHTML = ``;
 				}
+			}
+			
+			submitButton.onclick = () => {
+				console.log(currentType);
 			}
 		</script>
 		
