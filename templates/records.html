@@ -126,8 +126,13 @@
 		</div>
 		<!--? Start Align Area -->
 		<div class="whole-wrap">
-			<div class="container box_1170" id="container">
-				
+			<div class="container">
+				<div class="row d-flex justify-content-between">
+					<div class="col-lg-2 col-md-0"></div>
+					<div class="col-lg-8 col-md-12" id="container">
+					</div>
+					<div class="col-lg-2 col-md-0"></div>
+				</div>
 			</div>
 		</div>
 		<!-- End Align Area -->
@@ -212,7 +217,7 @@
 			.record {
 				width: calc(100% - 50px);
 				max-width: 600px;
-				padding: 10px;
+				padding: 15px;
 				border: 3px solid #000000;
 				color: #000000;
 				border-radius: 10px;
@@ -220,6 +225,15 @@
 				cursor: pointer;
 				transition: background-color 0.25s ease-in-out,
 							color 0.25s ease-in-out;
+			}
+			.record > * {
+				color: inherit !important;
+			}
+			.record > * > * {
+				color: inherit !important;
+			}
+			.record > p {
+				margin: 0;
 			}
 			.record-1 {
 				border: 3px solid #f4e700;
@@ -267,19 +281,28 @@
 							let id = doc.id;
 							if(el.type == 1) {
 								return `
-									<div class="record record-1" onclick="window.location.href = '/records/${id}';">Diabetic Retinopathy Image</div>
+									<div class="record record-1" onclick="window.location.href = '/records/${id}';">
+										<center><h3>Diabetic Retinopathy Image</h3></center>
+										<p>${el.result}</p>
+									</div>
 								`;
 							} else if(el.type == 2) {
 								return `
-									<div class="record record-2" onclick="window.location.href = '/records/${id}';">Time Until Blind</div>
+									<div class="record record-2" onclick="window.location.href = '/records/${id}';">
+										<center><h3>Time Until Blind</h3></center>
+										<p>${el.result}</p>
+									</div>
 								`;
 							} else if(el.type == 3) {
 								return `
-									<div class="record record-3" onclick="window.location.href = '/records/${id}';">Report Summary</div>
+									<div class="record record-3" onclick="window.location.href = '/records/${id}';">
+										<center><h3>Report Summary</h3></center>
+										<p>${el.result}</p>
+									</div>
 								`;
 							}
 						});
-						container.innerHTML = "<center>" + domEls.join("") + "</center>";
+						container.innerHTML = domEls.join("");
 					})
 			}
 		</script>
