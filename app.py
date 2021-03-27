@@ -29,8 +29,7 @@ def view_records():
 
 @app.route('/records/<record>')
 def records(record):
-    print(record)
-    return render_template('record.html')
+    return render_template('record.html', record=record)
 
 
 @app.route('/add')
