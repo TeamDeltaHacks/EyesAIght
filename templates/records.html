@@ -214,8 +214,12 @@
 				max-width: 600px;
 				padding: 10px;
 				border: 3px solid #000000;
+				color: #000000;
 				border-radius: 10px;
 				margin: 10px;
+				cursor: pointer;
+				transition: background-color 0.25s ease-in-out,
+							color 0.25s ease-in-out;
 			}
 			.record-1 {
 				border: 3px solid #f4e700;
@@ -225,6 +229,19 @@
 			}
 			.record-3 {
 				border: 3px solid #38a4ff;
+			}
+			.record:hover {
+				color: #ffffff;
+			}
+			.record-1:hover {
+				background-color: #f4e700;
+				color: #000000;
+			}
+			.record-2:hover {
+				background-color: #f44a40;
+			}
+			.record-3:hover {
+				background-color: #38a4ff;
 			}
 		</style>
 
@@ -242,21 +259,23 @@
 					.orderBy("createdAt")
 					.onSnapshot((snapshot) => {
 						let elements = snapshot.docs.map((document) => {
-							return document.data();
+							return {data: document.data(), id: document.id};
 						});
 						console.log(elements);
-						let domEls = elements.map((el) => {
+						let domEls = elements.map((doc) => {
+							let el = doc.data;
+							let id = doc.id;
 							if(el.type == 1) {
 								return `
-									<div class="record record-1">Diabetic Retinopathy Image</div>
+									<div class="record record-1" onclick="window.location.href = '/records/${id}';">Diabetic Retinopathy Image</div>
 								`;
 							} else if(el.type == 2) {
 								return `
-									<div class="record record-2">Time Until Blind</div>
+									<div class="record record-2" onclick="window.location.href = '/records/${id}';">Time Until Blind</div>
 								`;
 							} else if(el.type == 3) {
 								return `
-									<div class="record record-3">Report Summary</div>
+									<div class="record record-3" onclick="window.location.href = '/records/${id}';">Report Summary</div>
 								`;
 							}
 						});
