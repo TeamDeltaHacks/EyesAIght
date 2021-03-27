@@ -164,11 +164,7 @@
 								<a href="javascript:switchRecord(3);" class="genric-btn info">Report Summary</a>
 								<p>&nbsp;</p>
 								<div class="form" id="form" style="margin-bottom: 10px;">
-									<p><b>Report:</b></p>
-									<div class="mt-10">
-										<textarea class="single-textarea" placeholder="Report" onfocus="this.placeholder = ''"
-										onblur="this.placeholder = 'Report'" required></textarea>
-									</div>
+									
 								</div>
 							</center>
 							<p id="text-error" style="color: #ff0000; margin-top:10px;"></p>
@@ -332,7 +328,19 @@
 
 		<script>
 			const switchRecord = (type) => {
-				console.log(type);
+				if(type == 1) {
+					document.getElementById("form").innerHTML = `<p><b>Report:</b></p>
+						<div class="mt-10">
+							<textarea class="single-textarea" placeholder="Report" onfocus="this.placeholder = ''"
+							onblur="this.placeholder = 'Report'" required></textarea>
+						</div>`;
+				} else if(type == 2) {
+					document.getElementById("form").innerHTML = ``;
+				} else if(type == 3) {
+					document.getElementById("form").innerHTML = ``;
+				} else {
+					document.getElementById("form").innerHTML = ``;
+				}
 			}
 		</script>
 		
@@ -348,6 +356,7 @@
 				} else {
 					document.getElementById("nav-sign-in").remove();
 					document.getElementById("nav-sign-up").innerHTML = '<a href="javascript:auth.signOut();" class="btn">Sign Out</a>';
+					switchRecord(1);
 					resolvedCredentials = true;
 					if(windowLoaded && resolvedCredentials) {
 						$('#preloader-active').delay(450).fadeOut('slow');
