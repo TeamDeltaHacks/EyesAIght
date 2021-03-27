@@ -222,7 +222,6 @@
 				color: #000000;
 				border-radius: 10px;
 				margin: 10px;
-				cursor: pointer;
 			}
 			.record > * {
 				color: inherit !important;
@@ -258,24 +257,38 @@
 							container.innerHTML = `
 								<div class="record">
 									<center><h3>Diabetic Retinopathy Image</h3></center>
-									<p>${data.result}</p>
+									<p><b>Result:</b> ${data.result}</p><br>
+									<p><b>Image:</b></p><br>
+									<img src="${data.image}" width="250px" />
+									<p>&nbsp;</p>
+									<p><b>Created at:</b> ${new Date(data.createdAt.seconds * 1000).toLocaleDateString()} ${new Date(data.createdAt.seconds * 1000).toLocaleTimeString()}</p>
 								</div>
+								<center><a href="/records" class="genric-btn info">&lt; Back</a></center>
 							`;
 							document.getElementById("records-title").innerHTML = "Diabetic Retinopathy Image";
 						} else if(data.type == 2) {
 							container.innerHTML = `
 								<div class="record">
 									<center><h3>Time Until Blind</h3></center>
-									<p>${data.result}</p>
+									<p><b>Result:</b> ${data.result}</p><br>
+									<p><b>Age:</b> ${data.age}</p><br>
+									<p><b>Diabetes Type:</b> ${data.diabetes_type}</p><br>
+									<p><b>Risk Group:</b> ${data.risk}</p><br>
+									<p><b>Eye:</b> ${data.eye == 1 ? "right" : "left"}</p><br>
+									<p><b>Created at:</b> ${new Date(data.createdAt.seconds * 1000).toLocaleDateString()} ${new Date(data.createdAt.seconds * 1000).toLocaleTimeString()}</p>
 								</div>
+								<center><a href="/records" class="genric-btn info">&lt; Back</a></center>
 							`;
 							document.getElementById("records-title").innerHTML = "Time Until Blind";
 						} else if(data.type == 3) {
 							container.innerHTML = `
 								<div class="record">
 									<center><h3>Report Summary</h3></center>
-									<p>${data.result}</p>
+									<p><b>Result:</b> ${data.result}</p><br>
+									<p><b>Content:</b> ${data.content}</p><br>
+									<p><b>Created at:</b> ${new Date(data.createdAt.seconds * 1000).toLocaleDateString()} ${new Date(data.createdAt.seconds * 1000).toLocaleTimeString()}</p>
 								</div>
+								<center><a href="/records" class="genric-btn info">&lt; Back</a></center>
 							`;
 							document.getElementById("records-title").innerHTML = "Report Summary";
 						}
