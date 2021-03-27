@@ -7,7 +7,7 @@ import keras
 from keras.models import load_model
 import pandas as pd
 import cv2
-from summarizer import Summarizer # BERT model
+from summarizer import Summarizer  # BERT model
 import sklearn as sk
 from sksurv.linear_model import CoxnetSurvivalAnalysis
 
@@ -30,12 +30,12 @@ def view_records():
 @app.route('/records/<record>')
 def records(record):
     print(record)
-    return render_template('elements.html')
+    return render_template('record.html')
 
 
 @app.route('/add')
 def add():
-    return render_template('elements.html')
+    return render_template('add.html')
 
 
 @app.route('/register')
