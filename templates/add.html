@@ -168,6 +168,7 @@
 								</div>
 								<div class="genric-btn primary" id="btn-submit">Submit</div>
 							</center>
+							<p id="text-error" style="color: #ff0000; margin-top:10px;"></p>
 						</div>
 						<div class="col-lg-2 col-md-1"></div>
 					</div>
@@ -334,17 +335,37 @@
 			const switchRecord = (type) => {
 				currentType = type;
 				if(type == 1) {
+					form.innerHTML = `<p><b>Image:</b></p>
+						<div class="mt-10">
+							
+						</div>`;
+				} else if(type == 2) {
+					form.innerHTML = `<p><b>Laser Type:</b></p>
+						<div class="input-group-icon mt-10">
+							<div class="icon"><i class="fa fa-plane" aria-hidden="true"></i></div>
+							<div class="form-select" id="default-select"">
+								<select>
+									<option value=" 1">City</option>
+									<option value="1">Dhaka</option>
+									<option value="1">Dilli</option>
+									<option value="1">Newyork</option>
+									<option value="1">Islamabad</option>
+								</select>
+							</div>
+						</div>
+					</div>`;
+				} else if(type == 3) {
 					form.innerHTML = `<p><b>Report:</b></p>
 						<div class="mt-10">
 							<textarea class="single-textarea" placeholder="Report" onfocus="this.placeholder = ''"
 							onblur="this.placeholder = 'Report'" required></textarea>
 						</div>`;
-				} else if(type == 2) {
-					form.innerHTML = ``;
-				} else if(type == 3) {
-					form.innerHTML = ``;
 				} else {
 					form.innerHTML = ``;
+				}
+				let nice_Select = $('select');
+				if(nice_Select.length){
+					nice_Select.niceSelect();
 				}
 			}
 			
