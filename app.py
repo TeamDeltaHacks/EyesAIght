@@ -10,7 +10,7 @@ def index():
 
 @app.route('/records')
 def view_records():
-    return render_template('elements.html')
+    return render_template('records.html')
 
 
 @app.route('/records/<record>')
