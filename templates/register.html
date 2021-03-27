@@ -276,10 +276,6 @@
 			const passwordInput = document.getElementById("input-password");
 			const registerButton = document.getElementById("btn-register");
 
-			const validateEmail = (email) => {
-				return /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email);
-			}
-
 			const register = (email, password) => {
 				return new Promise(async (resolve, reject) => {
 					auth.createUserWithEmailAndPassword(email, password).then((userCredential) => {
@@ -291,17 +287,9 @@
 			}
 
 			registerButton.onclick = async () => {
-				if(validateEmail(emailInput.value)) {
-					if(passwordInput.value != "") {
-						credentials = await register(emailInput.value, passwordInput.value).catch((err) => {
-							alert(err.message);
-						});
-					} else {
-						alert("Password is blank.");
-					}
-				} else {
-					alert("Email is invalid.");
-				}
+				credentials = await register(emailInput.value, passwordInput.value).catch((err) => {
+					alert(err.message);
+				});
 			}			
 		</script>
 
