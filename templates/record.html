@@ -223,6 +223,15 @@
 				border-radius: 10px;
 				margin: 10px;
 			}
+			.record-1 {
+				border: 3px solid #f4e700;
+			}
+			.record-2 {
+				border: 3px solid #f44a40;
+			}
+			.record-3 {
+				border: 3px solid #38a4ff;
+			}
 			.record > * {
 				color: inherit !important;
 			}
@@ -255,40 +264,40 @@
 						let data = el.data;
 						if(data.type == 1) {
 							container.innerHTML = `
-								<div class="record">
+								<div class="record record-1">
 									<center><h3>Diabetic Retinopathy Image</h3></center>
 									<p><b>Result:</b> ${data.result}</p><br>
 									<p><b>Image:</b></p><br>
 									<img src="${data.image}" width="250px" />
 									<p>&nbsp;</p>
-									<p><b>Created at:</b> ${new Date(data.createdAt.seconds * 1000).toLocaleDateString()} ${new Date(data.createdAt.seconds * 1000).toLocaleTimeString()}</p>
+									<p><b>Created at:</b> ${new Date(data.createdAt.seconds * 1000).toLocaleDateString()} ${new Date(data.createdAt.seconds * 1000).toLocaleTimeString()}</p><br>
+									<center><a href="/records" class="genric-btn warning" style="color: #000000;">&lt; Back</a></center>
 								</div>
-								<center><a href="/records" class="genric-btn info">&lt; Back</a></center>
 							`;
 							document.getElementById("records-title").innerHTML = "Diabetic Retinopathy Image";
 						} else if(data.type == 2) {
 							container.innerHTML = `
-								<div class="record">
+								<div class="record record-2">
 									<center><h3>Time Until Blind</h3></center>
 									<p><b>Result:</b> ${data.result}</p><br>
 									<p><b>Age:</b> ${data.age}</p><br>
 									<p><b>Diabetes Type:</b> ${data.diabetes_type}</p><br>
 									<p><b>Risk Group:</b> ${data.risk}</p><br>
 									<p><b>Eye:</b> ${data.eye == 1 ? "right" : "left"}</p><br>
-									<p><b>Created at:</b> ${new Date(data.createdAt.seconds * 1000).toLocaleDateString()} ${new Date(data.createdAt.seconds * 1000).toLocaleTimeString()}</p>
+									<p><b>Created at:</b> ${new Date(data.createdAt.seconds * 1000).toLocaleDateString()} ${new Date(data.createdAt.seconds * 1000).toLocaleTimeString()}</p><br>
+									<center><a href="/records" class="genric-btn danger">&lt; Back</a></center>
 								</div>
-								<center><a href="/records" class="genric-btn info">&lt; Back</a></center>
 							`;
 							document.getElementById("records-title").innerHTML = "Time Until Blind";
 						} else if(data.type == 3) {
 							container.innerHTML = `
-								<div class="record">
+								<div class="record record-3">
 									<center><h3>Report Summary</h3></center>
 									<p><b>Result:</b> ${data.result}</p><br>
 									<p><b>Content:</b> ${data.content}</p><br>
-									<p><b>Created at:</b> ${new Date(data.createdAt.seconds * 1000).toLocaleDateString()} ${new Date(data.createdAt.seconds * 1000).toLocaleTimeString()}</p>
+									<p><b>Created at:</b> ${new Date(data.createdAt.seconds * 1000).toLocaleDateString()} ${new Date(data.createdAt.seconds * 1000).toLocaleTimeString()}</p><br>
+									<center><a href="/records" class="genric-btn info">&lt; Back</a></center>
 								</div>
-								<center><a href="/records" class="genric-btn info">&lt; Back</a></center>
 							`;
 							document.getElementById("records-title").innerHTML = "Report Summary";
 						}
