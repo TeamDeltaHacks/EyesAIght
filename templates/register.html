@@ -51,6 +51,16 @@
   firebase.initializeApp(firebaseConfig);
   firebase.analytics();
 </script>
+<script>
+	const auth = firebase.auth();
+	var credentials;
+	auth.onAuthStateChanged(function(user) {
+		credentials = user;
+		if(credentials != null) {
+			window.location.href = "/records";
+		}
+	});
+</script>
 	<!-- ? Preloader Start -->
 	<div id="preloader-active">
 		<div class="preloader d-flex align-items-center justify-content-center">
@@ -133,17 +143,17 @@
 							<h3 class="mb-30">Register</h3>
 							<div class="form" style="margin-bottom: 10px;">
 								<div class="mt-10">
-									<input type="email" name="EMAIL" placeholder="Email address"
+									<input type="email" name="EMAIL" id="input-email" placeholder="Email address"
 									onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email address'" required
 									class="single-input">
 								</div>
 								<div class="mt-10">
-									<input type="password" name="PASSWORD" placeholder="Password"
+									<input type="password" name="PASSWORD" id="input-password" placeholder="Password"
 									onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'" required
 									class="single-input">
 								</div>
 							</div>
-							<center><div class="genric-btn primary">Register</div></center>
+							<center><div class="genric-btn primary" id="btn-register">Register</div></center>
 						</div>
 						<div class="col-lg-4 col-md-2"></div>
 					</div>
@@ -259,6 +269,41 @@
 		</div>
 
 		<!-- JS here -->
+
+		<script>
+
+			const emailInput = document.getElementById("input-email");
+			const passwordInput = document.getElementById("input-password");
+			const registerButton = document.getElementById("btn-register");
+
+			const validateEmail = (email) => {
+				return /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email);
+			}
+
+			const register = (email, password) => {
+				return new Promise(async (resolve, reject) => {
+					auth.createUserWithEmailAndPassword(email, password).then((userCredential) => {
+						resolve(userCredential);
+					}).catch((err) => {
+						reject(err);
+					});
+				})
+			}
+
+			registerButton.onclick = async () => {
+				if(validateEmail(emailInput.value)) {
+					if(passwordInput.value != "") {
+						credentials = await register(emailInput.value, passwordInput.value).catch((err) => {
+							alert(err.message);
+						});
+					} else {
+						alert("Password is blank.");
+					}
+				} else {
+					alert("Email is invalid.");
+				}
+			}			
+		</script>
 
 		<script src="/static/assets/js/vendor/modernizr-3.5.0.min.js"></script>
 		<!-- Jquery, Popper, Bootstrap -->
