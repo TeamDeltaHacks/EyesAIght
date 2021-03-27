@@ -154,6 +154,7 @@
 								</div>
 							</div>
 							<center><div class="genric-btn primary" id="btn-login">Login</div></center>
+							<p id="text-error" style="color: #ff0000; margin-top:10px;"></p>
 						</div>
 						<div class="col-lg-4 col-md-2"></div>
 					</div>
@@ -275,6 +276,7 @@
 			const emailInput = document.getElementById("input-email");
 			const passwordInput = document.getElementById("input-password");
 			const loginButton = document.getElementById("btn-login");
+			const textError = document.getElementById("text-error");
 
 			const login = (email, password) => {
 				return new Promise(async (resolve, reject) => {
@@ -288,7 +290,7 @@
 
 			loginButton.onclick = async () => {
 				credentials = await login(emailInput.value, passwordInput.value).catch((err) => {
-					alert(err.message);
+					textError.innerHTML = err.message;
 				});
 			}
 		</script>
