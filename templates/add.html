@@ -124,29 +124,52 @@
 				<img class="slider-shape1" src="/static/assets/img/hero/top-left-shape.png" alt="">
 			</div>
 		</div>
+		<style>
+			.form > p {
+				text-align: left;
+				color: #000000;
+			}
+			.form > p > * {
+				color: inherit;
+			}
+			a.warning {
+				color: #000000 !important;
+			}
+			a.warning:hover {
+				color: #000000 !important;
+			}
+			a.danger {
+				color: #ffffff !important;
+			}
+			a.danger:hover {
+				color: #000000 !important;
+			}
+			a.info {
+				color: #ffffff !important;
+			}
+			a.info:hover {
+				color: #000000 !important;
+			}
+		</style>
 		<div class="whole-wrap">
 			<div class="container box_1170">
 				<div class="section-top-border">
 					<div class="row">
-						<div class="col-lg-4 col-md-2"></div>
-						<div class="col-lg-4 col-md-8">
-							<h3 class="mb-30">Login</h3>
-							<div class="form" style="margin-bottom: 10px;">
-								<div class="mt-10">
-									<input type="email" name="EMAIL" id="input-email" placeholder="Email address"
-									onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email address'" required
-									class="single-input">
+						<div class="col-lg-2 col-md-1"></div>
+						<div class="col-lg-8 col-md-10">
+							<center>
+								<h3 class="mb-30">Add Record</h3>
+								<a href="javascript:switchRecord(1);" class="genric-btn warning">Diabetic Retinopathy Image</a>
+								<a href="javascript:switchRecord(2);" class="genric-btn danger">Time Until Blind</a>
+								<a href="javascript:switchRecord(3);" class="genric-btn info">Report Summary</a>
+								<p>&nbsp;</p>
+								<div class="form" id="form" style="margin-bottom: 10px;">
+									
 								</div>
-								<div class="mt-10">
-									<input type="password" name="PASSWORD" id="input-password" placeholder="Password"
-									onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'" required
-									class="single-input">
-								</div>
-							</div>
-							<center><div class="genric-btn primary" id="btn-login">Login</div></center>
-							<p id="text-error" style="color: #ff0000; margin-top:10px;"></p>
+								<div class="genric-btn primary" id="btn-submit">Submit</div>
+							</center>
 						</div>
-						<div class="col-lg-4 col-md-2"></div>
+						<div class="col-lg-2 col-md-1"></div>
 					</div>
 				</div>
 			</div>
@@ -302,6 +325,33 @@
 		<!-- Jquery Plugins, main Jquery -->	
 		<script src="/static/assets/js/plugins.js"></script>
 		<script src="/static/assets/js/main.js?v=2"></script>
+
+		<script>
+			const submitButton = document.getElementById("btn-submit");
+			const form = document.getElementById("form");
+			let currentType;
+
+			const switchRecord = (type) => {
+				currentType = type;
+				if(type == 1) {
+					form.innerHTML = `<p><b>Report:</b></p>
+						<div class="mt-10">
+							<textarea class="single-textarea" placeholder="Report" onfocus="this.placeholder = ''"
+							onblur="this.placeholder = 'Report'" required></textarea>
+						</div>`;
+				} else if(type == 2) {
+					form.innerHTML = ``;
+				} else if(type == 3) {
+					form.innerHTML = ``;
+				} else {
+					form.innerHTML = ``;
+				}
+			}
+			
+			submitButton.onclick = () => {
+				console.log(currentType);
+			}
+		</script>
 		
 		<script>
 			const auth = firebase.auth();
@@ -315,6 +365,7 @@
 				} else {
 					document.getElementById("nav-sign-in").remove();
 					document.getElementById("nav-sign-up").innerHTML = '<a href="javascript:auth.signOut();" class="btn">Sign Out</a>';
+					switchRecord(1);
 					resolvedCredentials = true;
 					if(windowLoaded && resolvedCredentials) {
 						$('#preloader-active').delay(450).fadeOut('slow');
