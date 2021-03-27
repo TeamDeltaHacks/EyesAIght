@@ -347,6 +347,7 @@
 				} else {
 					document.getElementById("nav-sign-in").remove();
 					document.getElementById("nav-sign-up").innerHTML = '<a href="javascript:auth.signOut();" class="btn">Sign Out</a>';
+					document.getElementById("records-title").innerHTML = "Records for " + credentials.email;
 					resolvedCredentials = true;
 					authenticated && authenticated(credentials);
 					if(windowLoaded && resolvedCredentials) {
