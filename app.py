@@ -7,12 +7,12 @@ import keras
 from keras.models import load_model
 import pandas as pd
 import cv2
-# from summarizer import Summarizer # BERT model
+from summarizer import Summarizer # BERT model
 import sklearn as sk
-# from sksurv.linear_model import CoxnetSurvivalAnalysis
+from sksurv.linear_model import CoxnetSurvivalAnalysis
 
-# survival_TR = load('coxnetTR.joblib')
-# survival_UT = load('coxnetUT.joblib')
+survival_TR = load('coxnetTR.joblib')
+survival_UT = load('coxnetUT.joblib')
 
 app = Flask(__name__)
 
