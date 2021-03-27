@@ -7,6 +7,7 @@ import keras
 from keras.models import load_model
 import pandas as pd
 import cv2
+from summarizer import Summarizer // BERT model
 
 survival_TR = load('coxnetTR.joblib')
 survival_UT = load('coxnetUT.joblib')
