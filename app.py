@@ -1,4 +1,15 @@
 from flask import Flask, render_template, request
+from werkzeug.utils import secure_filename
+import os
+from joblib import dump, load
+import tensorflow as tf
+import keras
+from keras.models import load_model
+import pandas as pd
+import cv2
+
+survival_TR = load('coxnetTR.joblib')
+survival_UT = load('coxnetUT.joblib')
 
 app = Flask(__name__)
 
