@@ -88,8 +88,8 @@
                                                 <li><a href="/records">View Records</a></li>
                                                 <li><a href="/add">Add Record</a></li>
                                                 <!-- Button -->
-                                                <li class="button-header margin-left "><a href="/register" class="btn">Sign Up</a></li>
-                                                <li class="button-header"><a href="/login" class="btn3">Sign In</a></li>
+                                                <li class="button-header margin-left" id="nav-sign-up"><a href="/register" class="btn">Sign Up</a></li>
+                                                <li class="button-header" id="nav-sign-in"><a href="/login" class="btn3">Sign In</a></li>
                                             </ul>
                                         </nav>
                                     </div>
@@ -622,11 +622,34 @@
 <script src="/static/assets/js/plugins.js"></script>
 <script src="/static/assets/js/main.js?v=2"></script>
 <script>
+    const auth = firebase.auth();
+    var credentials;
+    var resolvedCredentials = false;
+    var windowLoaded = false;
+    auth.onAuthStateChanged(function(user) {
+        credentials = user;
+        if(credentials == null) {
+            resolvedCredentials = true;
+        } else {
+            document.getElementById("nav-sign-in").remove();
+            document.getElementById("nav-sign-up").innerHTML = '<a href="javascript:auth.signOut();" class="btn">Sign Out</a>';
+            resolvedCredentials = true;
+        }
+        if(windowLoaded && resolvedCredentials) {
+            $('#preloader-active').delay(450).fadeOut('slow');
+            $('body').delay(450).css({
+                'overflow': 'visible'
+            });
+        }
+    });
     $(window).on('load', function () {
-        $('#preloader-active').delay(450).fadeOut('slow');
-        $('body').delay(450).css({
-            'overflow': 'visible'
-        });
+        windowLoaded = true;
+        if(windowLoaded && resolvedCredentials) {
+            $('#preloader-active').delay(450).fadeOut('slow');
+            $('body').delay(450).css({
+                'overflow': 'visible'
+            });
+        }
     });
 </script>
 
