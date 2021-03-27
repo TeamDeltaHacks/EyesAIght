@@ -296,17 +296,22 @@
 
 		<script>
 			const submitButton = document.getElementById("btn-submit");
+			const textError = document.getElementById("text-error");
 			const form = document.getElementById("form");
 			let currentType;
 
 			const switchRecord = (type) => {
 				currentType = type;
-				window.location.hash = "#" + type;
+				if(!isNaN(parseInt(type))) {
+					window.location.hash = "#" + type;
+				}
 				if(type == 1) {
 					form.innerHTML = `<p><b>Image:</b></p>
 						<div class="mt-10">
 							<input type="file" required class="single-input" />
 						</div>`;
+						submitButton.style.display = "";
+						textError.style.display = "";
 				} else if(type == 2) {
 					form.innerHTML = `<p><b>Laser Type:</b></p>
 						<div class="input-group-icon mt-10">
@@ -380,14 +385,20 @@
 							</div>
 						</div><br>
 					</div>`;
+					submitButton.style.display = "";
+					textError.style.display = "";
 				} else if(type == 3) {
 					form.innerHTML = `<p><b>Report:</b></p>
 						<div class="mt-10">
 							<textarea class="single-textarea" placeholder="Report" onfocus="this.placeholder = ''"
 							onblur="this.placeholder = 'Report'" required></textarea>
 						</div>`;
+					submitButton.style.display = "";
+					textError.style.display = "";
 				} else {
 					form.innerHTML = ``;
+					submitButton.style.display = "none";
+					textError.style.display = "none";
 				}
 				let nice_Select = $('select');
 				if(nice_Select.length){
@@ -412,7 +423,7 @@
 				} else {
 					document.getElementById("nav-sign-in").remove();
 					document.getElementById("nav-sign-up").innerHTML = '<a href="javascript:auth.signOut();" class="btn">Sign Out</a>';
-					switchRecord(window.location.hash.length < 2 ? 1 : parseInt(window.location.hash.substring(1, 2)));
+					switchRecord(window.location.hash.length < 2 ? null : parseInt(window.location.hash.substring(1, 2)));
 					resolvedCredentials = true;
 					if(windowLoaded && resolvedCredentials) {
 						$('#preloader-active').delay(450).fadeOut('slow');
