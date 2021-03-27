@@ -301,25 +301,84 @@
 
 			const switchRecord = (type) => {
 				currentType = type;
+				window.location.hash = "#" + type;
 				if(type == 1) {
 					form.innerHTML = `<p><b>Image:</b></p>
 						<div class="mt-10">
-							
+							<input type="file" required class="single-input" />
 						</div>`;
 				} else if(type == 2) {
 					form.innerHTML = `<p><b>Laser Type:</b></p>
 						<div class="input-group-icon mt-10">
-							<div class="icon"><i class="fa fa-plane" aria-hidden="true"></i></div>
+							<div class="icon"><i class="fas fa-eye" aria-hidden="true"></i></div>
 							<div class="form-select" id="default-select"">
 								<select>
-									<option value=" 1">City</option>
-									<option value="1">Dhaka</option>
-									<option value="1">Dilli</option>
-									<option value="1">Newyork</option>
-									<option value="1">Islamabad</option>
+									<option value="0">Choose a laser type...</option>
+									<option value="1">Xenon</option>
+									<option value="2">Argon</option>
 								</select>
 							</div>
-						</div>
+						</div><br>
+						<p><b>Treated Eye:</b></p>
+						<div class="input-group-icon mt-10">
+							<div class="icon"><i class="fas fa-eye" aria-hidden="true"></i></div>
+							<div class="form-select" id="default-select"">
+								<select>
+									<option value="0">Choose a treated eye...</option>
+									<option value="1">Right</option>
+									<option value="2">Left</option>
+								</select>
+							</div>
+						</div><br>
+						<p><b>Age at Diagnosis of Diabetes:</b></p>
+						<div class="mt-10">
+							<input type="number" min="1" placeholder="Age at Diagnosis of Diabetes"
+							onfocus="this.placeholder = ''" onblur="this.placeholder = 'Age at Diagnosis of Diabetes'" required
+							class="single-input">
+						</div><br>
+						<p><b>Type of Diabetes:</b></p>
+						<div class="input-group-icon mt-10">
+							<div class="icon"><i class="fas fa-eye" aria-hidden="true"></i></div>
+							<div class="form-select" id="default-select"">
+								<select>
+									<option value="0">Choose a type of diabetes...</option>
+									<option value="1">Juvenile (age at dx < 20)</option>
+									<option value="2">Adult</option>
+								</select>
+							</div>
+						</div><br>
+						<p><b>Untreated Risk Group:</b></p>
+						<div class="input-group-icon mt-10">
+							<div class="icon"><i class="fas fa-eye" aria-hidden="true"></i></div>
+							<div class="form-select" id="default-select"">
+								<select>
+									<option value="0">Choose an untreated risk group...</option>
+									<option value="6">6</option>
+									<option value="7">7</option>
+									<option value="8">8</option>
+									<option value="9">9</option>
+									<option value="10">10</option>
+									<option value="11">11</option>
+									<option value="12">12</option>
+								</select>
+							</div>
+						</div><br>
+						<p><b>Treated Risk Group:</b></p>
+						<div class="input-group-icon mt-10">
+							<div class="icon"><i class="fas fa-eye" aria-hidden="true"></i></div>
+							<div class="form-select" id="default-select"">
+								<select>
+									<option value="0">Choose a treated risk group...</option>
+									<option value="6">6</option>
+									<option value="7">7</option>
+									<option value="8">8</option>
+									<option value="9">9</option>
+									<option value="10">10</option>
+									<option value="11">11</option>
+									<option value="12">12</option>
+								</select>
+							</div>
+						</div><br>
 					</div>`;
 				} else if(type == 3) {
 					form.innerHTML = `<p><b>Report:</b></p>
@@ -353,7 +412,7 @@
 				} else {
 					document.getElementById("nav-sign-in").remove();
 					document.getElementById("nav-sign-up").innerHTML = '<a href="javascript:auth.signOut();" class="btn">Sign Out</a>';
-					switchRecord(1);
+					switchRecord(window.location.hash.length < 2 ? 1 : parseInt(window.location.hash.substring(1, 2)));
 					resolvedCredentials = true;
 					if(windowLoaded && resolvedCredentials) {
 						$('#preloader-active').delay(450).fadeOut('slow');
