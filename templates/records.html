@@ -217,6 +217,15 @@
 				border-radius: 10px;
 				margin: 10px;
 			}
+			.record-1 {
+				border: 3px solid #f4e700;
+			}
+			.record-2 {
+				border: 3px solid #f44a40;
+			}
+			.record-3 {
+				border: 3px solid #38a4ff;
+			}
 		</style>
 
 		<script>
@@ -239,15 +248,15 @@
 						let domEls = elements.map((el) => {
 							if(el.type == 1) {
 								return `
-									<div class="record">Diabetic Retinopathy Image</div>
+									<div class="record record-1">Diabetic Retinopathy Image</div>
 								`;
 							} else if(el.type == 2) {
 								return `
-									<div class="record">Time Until Blind</div>
+									<div class="record record-2">Time Until Blind</div>
 								`;
 							} else if(el.type == 3) {
 								return `
-									<div class="record">Report Summary</div>
+									<div class="record record-3">Report Summary</div>
 								`;
 							}
 						});
