@@ -1,6 +1,6 @@
 # EyesAIght
 
-Revolutionizes the opthamology field using Machine Learning
+Revolutionizing the opthamology field using Machine Learning
 
 ## Dependencies
 Due to GitHub's storage limit, we could not include one of the large trained model files in this repository. It can be downloaded [here](https://drive.google.com/file/d/1VhnAmoCXOwVYKVYtN_HhohBovc5Zk-v3/view?usp=sharing) and placed in the root directory of the repository.
