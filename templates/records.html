@@ -299,6 +299,7 @@
 								return `
 									<div class="record record-2" onclick="window.location.href = '/records/${id}';">
 										<center><h3>[${el.patient}] Time Until Blind</h3></center>
+										<p>Orange: Treated<br>Blue: Untreated</p>
 										<img src="${el.result}" style="width: calc(100% - 50px);" />
 										<p>${new Date(el.createdAt.seconds * 1000).toLocaleDateString()} ${new Date(el.createdAt.seconds * 1000).toLocaleTimeString()}</p>
 									</div>
