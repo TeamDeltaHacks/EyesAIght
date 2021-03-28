@@ -14,4 +14,6 @@ export FLASK_APP=hello.py
 flask run
 ```
 
-Finally, navigate to `localhost:5000` in your browser. Enjoy!
+As import errors arise, you may need to install more modules by using `pip install MODULE_NAME_HERE`.
+
+Finally, once the program runs without errors, navigate to `localhost:5000` in your browser. Enjoy!
