@@ -308,7 +308,7 @@
 				if(type == 1) {
 					form.innerHTML = `<p><b>Image:</b></p>
 						<div class="mt-10">
-							<input type="file" required class="single-input" />
+							<input type="file" required class="single-input" name="image" />
 						</div>`;
 						submitButton.innerHTML = "Predict";
 						submitButton.style.display = "";
@@ -318,7 +318,7 @@
 						<div class="input-group-icon mt-10">
 							<div class="icon"><i class="fas fa-eye" aria-hidden="true"></i></div>
 							<div class="form-select">
-								<select>
+								<select name="laser_type">
 									<option value="0">Choose a laser type...</option>
 									<option value="1">Xenon</option>
 									<option value="2">Argon</option>
@@ -329,7 +329,7 @@
 						<div class="input-group-icon mt-10">
 							<div class="icon"><i class="fas fa-eye" aria-hidden="true"></i></div>
 							<div class="form-select">
-								<select>
+								<select name="eye">
 									<option value="0">Choose a treated eye...</option>
 									<option value="1">Right</option>
 									<option value="2">Left</option>
@@ -338,7 +338,7 @@
 						</div><br>
 						<p><b>Age at Diagnosis of Diabetes:</b></p>
 						<div class="mt-10">
-							<input type="number" min="1" placeholder="Age at Diagnosis of Diabetes"
+							<input type="number" min="1" placeholder="Age at Diagnosis of Diabetes" value="1" name="age"
 							onfocus="this.placeholder = ''" onblur="this.placeholder = 'Age at Diagnosis of Diabetes'" required
 							class="single-input">
 						</div><br>
@@ -346,7 +346,7 @@
 						<div class="input-group-icon mt-10">
 							<div class="icon"><i class="fas fa-eye" aria-hidden="true"></i></div>
 							<div class="form-select">
-								<select>
+								<select name="diabetes_type">
 									<option value="0">Choose a type of diabetes...</option>
 									<option value="1">Juvenile (age at dx < 20)</option>
 									<option value="2">Adult</option>
@@ -357,7 +357,7 @@
 						<div class="input-group-icon mt-10">
 							<div class="icon"><i class="fas fa-eye" aria-hidden="true"></i></div>
 							<div class="form-select">
-								<select>
+								<select name="risk_untreated">
 									<option value="0">Choose an untreated risk group...</option>
 									<option value="6">6</option>
 									<option value="7">7</option>
@@ -373,7 +373,7 @@
 						<div class="input-group-icon mt-10">
 							<div class="icon"><i class="fas fa-eye" aria-hidden="true"></i></div>
 							<div class="form-select">
-								<select>
+								<select name="risk_treated">
 									<option value="0">Choose a treated risk group...</option>
 									<option value="6">6</option>
 									<option value="7">7</option>
@@ -393,7 +393,7 @@
 					form.innerHTML = `<p><b>Report:</b></p>
 						<div class="mt-10">
 							<textarea class="single-textarea" placeholder="Report" onfocus="this.placeholder = ''"
-							onblur="this.placeholder = 'Report'" required></textarea>
+							onblur="this.placeholder = 'Report'" name="content" required></textarea>
 						</div>`;
 					submitButton.innerHTML = "Summarize";
 					submitButton.style.display = "";
@@ -412,7 +412,21 @@
 			
 			submitButton.onclick = () => {
 				let elements = document.querySelectorAll("#form > div");
-
+				let data = {};
+				for(let i = 0; i < elements.length; i++) {
+					let element;
+					if(elements[i].classList.contains("input-group-icon")) {
+						element = elements[i].children[1].children[0];
+					} else {
+						element = elements[i].children[0];
+					}
+					if(isNaN(parseInt(element.value))) {
+						data[element.getAttribute("name")] = element.value;
+					} else {
+						data[element.getAttribute("name")] = parseInt(element.value);
+					}
+				}
+				console.log(data);
 			}
 		</script>
 		
