@@ -3,3 +3,4 @@ werkzeug==1.0.1
 bert-extractive-summarizer==0.7.1
 scikit-survival==0.15.0
 torchvision==0.9.1
+matplotlib==3.4.0

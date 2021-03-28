@@ -12,13 +12,48 @@ import urllib
 from summarizer import Summarizer  # BERT model
 import sklearn as sk
 from sksurv.linear_model import CoxnetSurvivalAnalysis
+from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
+import matplotlib.pyplot as plt
+from matplotlib.figure import Figure
+import io
+
 
 survival_TR = load('coxnetTR.joblib')
 survival_UT = load('coxnetUT.joblib')
 
+surv_funcs = {}
+surv_funcs2 = {}
+
 summarizer = Summarizer()
 
 dr_weights = load_model("dr_weights.h5")
+
+
+def create_figure():
+    fig = Figure()
+    axis = fig.add_subplot(1, 1, 1)
+    for alpha, surv_alpha in surv_funcs.items():
+        for fn in surv_alpha:
+            axis.plot(fn.x, fn(fn.x))
+
+    for alpha, surv_alpha in surv_funcs2.items():
+        for fn in surv_alpha:
+            axis.plot(fn.x, fn(fn.x))
+
+    axis.set_ylim([0, 1])
+    axis.set_title(
+        'Probability vs. Time curve for Blindness')
+    axis.set_xlabel('Time (Months)')
+    axis.set_ylabel('Probability of Survival')
+    return fig
+
+
+def plot_png():
+    fig = create_figure()
+    output = io.BytesIO()
+    FigureCanvas(fig).print_png(output)
+    return output.getvalue()
+
 
 app = Flask(__name__)
 
@@ -152,9 +187,12 @@ def add():
 
                 dataUT = X_dataf.iloc[:1]
                 dataTR = X2_dataf.iloc[:1]
-                print("2")
-                print(dataUT)
-                print(dataTR)
+
+                surv_funcs[0] = survival_UT.predict_survival_function(dataUT)
+                surv_funcs2[0] = survival_TR.predict_survival_function(dataTR)
+
+                plot = plot_png()
+                print(plot)
             except:
                 return '{"type":"error","response":"Invalid request, please try again."}'
         elif(json["type"] == 3):
