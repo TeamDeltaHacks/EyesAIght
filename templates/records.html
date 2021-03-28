@@ -245,18 +245,17 @@
 			.record-3 {
 				border: 3px solid #38a4ff;
 			}
-			.record:hover {
-				color: #ffffff;
-			}
 			.record-1:hover {
 				background-color: #f4e700;
 				color: #000000;
 			}
 			.record-2:hover {
 				background-color: #f44a40;
+				color: #ffffff;
 			}
 			.record-3:hover {
 				background-color: #38a4ff;
+				color: #ffffff;
 			}
 		</style>
 
@@ -273,59 +272,120 @@
 					.where("uid", "==", user.uid)
 					.orderBy("createdAt")
 					.onSnapshot((snapshot) => {
-						let names = new Set();
-						let unorderedElements = snapshot.docs.map((document) => {
-							names.add(document.data().patient);
-							return {data: document.data(), id: document.id};
-						});
-						names = [...names];
-						console.log(names);
-						let elements = Array(unorderedElements.length);
-						for(let i = 0; i < unorderedElements.length; i++) {
-							elements[elements.length - i - 1] = unorderedElements[i];
+						updateSnapshot(snapshot, "");
+						resolvedCredentials = true;
+						if(windowLoaded && resolvedCredentials) {
+							$('#preloader-active').delay(450).fadeOut('slow');
+							$('body').delay(450).css({
+								'overflow': 'visible'
+							});
 						}
-						let domEls = elements.map((doc) => {
-							let el = doc.data;
-							let id = doc.id;
-							if(el.type == 1) {
-								return `
-									<div class="record record-1" onclick="window.location.href = '/records/${id}';">
-										<center><h3>[${el.patient}] Diabetic Retinopathy Image</h3></center>
-										<p>${el.result}</p>
-										<p>${new Date(el.createdAt.seconds * 1000).toLocaleDateString()} ${new Date(el.createdAt.seconds * 1000).toLocaleTimeString()}</p>
-									</div>
-								`;
-							} else if(el.type == 2) {
-								return `
-									<div class="record record-2" onclick="window.location.href = '/records/${id}';">
-										<center><h3>[${el.patient}] Time Until Blind</h3></center>
-										<p>Orange: Treated<br>Blue: Untreated</p>
-										<img src="${el.result}" style="width: calc(100% - 50px);" />
-										<p>${new Date(el.createdAt.seconds * 1000).toLocaleDateString()} ${new Date(el.createdAt.seconds * 1000).toLocaleTimeString()}</p>
-									</div>
-								`;
-							} else if(el.type == 3) {
-								return `
-									<div class="record record-3" onclick="window.location.href = '/records/${id}';">
-										<center><h3>[${el.patient}] Report Summary</h3></center>
-										<p>${el.result}</p>
-										<p>${new Date(el.createdAt.seconds * 1000).toLocaleDateString()} ${new Date(el.createdAt.seconds * 1000).toLocaleTimeString()}</p>
-									</div>
-								`;
-							}
-						});
-						names = names.map((name) => {
-							
-						});
-						container.innerHTML = "<center>" + domEls.join("") + "</center>";
 					});
-					resolvedCredentials = true;
-					if(windowLoaded && resolvedCredentials) {
-						$('#preloader-active').delay(450).fadeOut('slow');
-						$('body').delay(450).css({
-							'overflow': 'visible'
-						});
+			}
+			const updateSnapshot = (snapshot, patient) => {
+				let names = new Set();
+				let unorderedElements = snapshot.docs.map((document) => {
+					names.add(document.data().patient);
+					return {data: document.data(), id: document.id};
+				});
+				names = [...names];
+				let elements = Array(unorderedElements.length);
+				for(let i = 0; i < unorderedElements.length; i++) {
+					elements[elements.length - i - 1] = unorderedElements[i];
+				}
+				let latest = {};
+				let domEls = elements.map((doc) => {
+					latest[doc.data.type] = doc.data;
+					let el = doc.data;
+					let id = doc.id;
+					if(el.type == 1) {
+						return `
+							<div class="record record-1" onclick="window.location.href = '/records/${id}';">
+								<center><h3>[${el.patient}] Diabetic Retinopathy Image</h3></center>
+								<p>${el.result}</p>
+								<p>${new Date(el.createdAt.seconds * 1000).toLocaleDateString()} ${new Date(el.createdAt.seconds * 1000).toLocaleTimeString()}</p>
+							</div>
+						`;
+					} else if(el.type == 2) {
+						return `
+							<div class="record record-2" onclick="window.location.href = '/records/${id}';">
+								<center><h3>[${el.patient}] Time Until Blind</h3></center>
+								<p>Orange: Treated<br>Blue: Untreated</p>
+								<img src="${el.result}" style="width: calc(100% - 50px);" />
+								<p>${new Date(el.createdAt.seconds * 1000).toLocaleDateString()} ${new Date(el.createdAt.seconds * 1000).toLocaleTimeString()}</p>
+							</div>
+						`;
+					} else if(el.type == 3) {
+						return `
+							<div class="record record-3" onclick="window.location.href = '/records/${id}';">
+								<center><h3>[${el.patient}] Report Summary</h3></center>
+								<p>${el.result}</p>
+								<p>${new Date(el.createdAt.seconds * 1000).toLocaleDateString()} ${new Date(el.createdAt.seconds * 1000).toLocaleTimeString()}</p>
+							</div>
+						`;
 					}
+				});
+				names = names.map((name) => {
+					if(name == patient) {
+						return `<option value="${name}" selected>${name}</option>`;
+					} else {
+						return `<option value="${name}">${name}</option>`;
+					}
+				});
+				names = `<div class="input-group-icon mt-10">
+					<div class="icon"><i class="fas fa-eye" aria-hidden="true"></i></div>
+					<div class="form-select">
+						<select onchange="updatePatients(this.value);">
+							<option value="">All Patients</option>
+							${names.join("")}
+						</select>
+					</div>
+				</div><br>`
+				if(patient == "") {
+					container.innerHTML = "<center>" + names + domEls.join("") + "</center>";
+				} else {
+					let latestKeys = Object.keys(latest);
+					latestKeys = latestKeys.map((latestKey) => {
+						if(latestKey == "1") {
+							return `<p><b>Diabetic Retinopathy Image:</b> ${latest[latestKey].result}</p><br>`;
+						} else if(latestKey == "2") {
+							return `<p><b>Time Until Blind:</b></p><br><img src="${latest[latestKey].result}" style="width: calc(100% - 50px);" /><br>`;
+						} else if(latestKey == "3") {
+							return `<p><b>Report Summary:</b> ${latest[latestKey].result}</p><br>`;
+						}
+					});
+					let extraData = `
+						<div class="record">
+							<center><h3>Latest Data for ${patient}</h3></center>
+							${latestKeys.join("")}
+						</div>
+					`;
+					console.log(latestKeys);
+					container.innerHTML = "<center>" + names + extraData + domEls.join("") + "</center>";
+				}
+				let nice_Select = $('select');
+				if(nice_Select.length){
+					nice_Select.niceSelect();
+				}
+			}
+			const updatePatients = (patient) => {
+				dbUnsubscribe && dbUnsubscribe();
+				if(patient == "") {
+					dbUnsubscribe = dbRef
+						.where("uid", "==", auth.currentUser.uid)
+						.orderBy("createdAt")
+						.onSnapshot((snapshot) => {
+							updateSnapshot(snapshot, patient);
+						});
+				} else {
+					dbUnsubscribe = dbRef
+						.where("uid", "==", auth.currentUser.uid)
+						.where("patient", "==", patient)
+						.orderBy("createdAt")
+						.onSnapshot((snapshot) => {
+							updateSnapshot(snapshot, patient);
+						});
+				}
 			}
 		</script>
 
