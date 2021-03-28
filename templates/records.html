@@ -273,10 +273,13 @@
 					.where("uid", "==", user.uid)
 					.orderBy("createdAt")
 					.onSnapshot((snapshot) => {
-						let elements = snapshot.docs.map((document) => {
+						let unorderedElements = snapshot.docs.map((document) => {
 							return {data: document.data(), id: document.id};
 						});
-						console.log(elements);
+						let elements = Array(unorderedElements.length);
+						for(let i = 0; i < unorderedElements.length; i++) {
+							elements[elements.length - i - 1] = unorderedElements[i];
+						}
 						let domEls = elements.map((doc) => {
 							let el = doc.data;
 							let id = doc.id;
@@ -285,6 +288,7 @@
 									<div class="record record-1" onclick="window.location.href = '/records/${id}';">
 										<center><h3>Diabetic Retinopathy Image</h3></center>
 										<p>${el.result}</p>
+										<p>${new Date(el.createdAt.seconds * 1000).toLocaleDateString()} ${new Date(el.createdAt.seconds * 1000).toLocaleTimeString()}</p>
 									</div>
 								`;
 							} else if(el.type == 2) {
@@ -292,6 +296,7 @@
 									<div class="record record-2" onclick="window.location.href = '/records/${id}';">
 										<center><h3>Time Until Blind</h3></center>
 										<p>${el.result}</p>
+										<p>${new Date(el.createdAt.seconds * 1000).toLocaleDateString()} ${new Date(el.createdAt.seconds * 1000).toLocaleTimeString()}</p>
 									</div>
 								`;
 							} else if(el.type == 3) {
@@ -299,6 +304,7 @@
 									<div class="record record-3" onclick="window.location.href = '/records/${id}';">
 										<center><h3>Report Summary</h3></center>
 										<p>${el.result}</p>
+										<p>${new Date(el.createdAt.seconds * 1000).toLocaleDateString()} ${new Date(el.createdAt.seconds * 1000).toLocaleTimeString()}</p>
 									</div>
 								`;
 							}
