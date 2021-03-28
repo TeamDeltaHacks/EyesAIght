@@ -272,15 +272,9 @@
 			const authenticated = (user) => {
 				dbRef = db.collection("records");
 				dbUnsubscribe = dbRef
-					.where("uid", "==", user.uid)
-					.orderBy("createdAt")
+					.doc("{{record}}")
 					.onSnapshot((snapshot) => {
-						let elements = snapshot.docs.map((document) => {
-							return {data: document.data(), id: document.id};
-						});
-						console.log(elements);
-						let el = elements.find(item => item.id == "{{record}}");
-						let data = el.data;
+						let data = snapshot.data();
 						if(data.type == 1) {
 							container.innerHTML = `
 								<center><div class="record record-1">
