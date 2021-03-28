@@ -413,7 +413,9 @@
 			submitButton.onclick = async () => {
 				let elements = document.querySelectorAll("#form > div");
 				let data = {
-					type: currentType
+					type: currentType,
+					uid: firebase.auth().currentUser.uid,
+					createdAt: firebase.firestore.FieldValue.serverTimestamp()
 				};
 				for(let i = 0; i < elements.length; i++) {
 					let element;
@@ -440,6 +442,9 @@
 				xhr.onreadystatechange = function() {
 					if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
 						data["result"] = this.responseText;
+						firebase.firestore().collection("records").add(data).then((docRef) => {
+							window.location.href = "/records/" + docRef.id;
+						});
 					}
 				}
 				xhr.send(JSON.stringify(data));
