@@ -76,11 +76,99 @@ def add():
 
             return '{"type":"success","response":"' + output + '"}'
         elif(json["type"] == 2):
-            pass
+            try:
+                if("laser_type" not in json or json["laser_type"] == ""):
+                    return '{"type":"error","response":"Laser type field must not be left blank."}'
+                json["laser_type"] = int(json["laser_type"])
+                if(json["laser_type"] != 1 and json["laser_type"] != 2):
+                    return '{"type":"error","response":"Laser type field must not be left blank."}'
+
+                if("eye" not in json or json["eye"] == ""):
+                    return '{"type":"error","response":"Treated eye field must not be left blank."}'
+                json["eye"] = int(json["eye"])
+                if(json["eye"] != 1 and json["eye"] != 2):
+                    return '{"type":"error","response":"Treated eye field must not be left blank."}'
+
+                if("age" not in json or json["age"] == ""):
+                    return '{"type":"error","response":"Age field must not be left blank."}'
+                json["age"] = int(json["age"])
+                if(json["age"] < 1):
+                    json["age"] = 1
+                if(json["age"] > 58):
+                    json["age"] = 58
+
+                if("diabetes_type" not in json or json["diabetes_type"] == ""):
+                    return '{"type":"error","response":"Diabetes type field must not be left blank."}'
+                json["diabetes_type"] = int(json["diabetes_type"])
+                if(json["diabetes_type"] != 1 and json["diabetes_type"] != 2):
+                    return '{"type":"error","response":"Diabetes type field must not be left blank."}'
+
+                if("risk_untreated" not in json or json["risk_untreated"] == ""):
+                    return '{"type":"error","response":"Untreated risk field must not be left blank."}'
+                json["risk_untreated"] = int(json["risk_untreated"])
+                if(json["risk_untreated"] < 6 or json["risk_untreated"] > 12):
+                    return '{"type":"error","response":"Untreated risk field must not be left blank."}'
+
+                if("risk_treated" not in json or json["risk_treated"] == ""):
+                    return '{"type":"error","response":"Treated risk field must not be left blank."}'
+                json["risk_treated"] = int(json["risk_treated"])
+                if(json["risk_treated"] < 6 or json["risk_treated"] > 12):
+                    return '{"type":"error","response":"Treated risk field must not be left blank."}'
+
+                column_names = ['ID', 'Laser Type', 'Eye', 'Age', 'Type', 'Treated Group',
+                                'Treated Status', 'Treated Time', 'Untreated Group', 'Untreated Status', 'Untreated Time']
+                raw_ds = pd.read_csv('drdata.csv', na_values="NaN")
+                raw_ds.columns = column_names
+                dataset = raw_ds.copy()
+                dataset2 = raw_ds.copy()
+                dataset = dataset.drop(
+                    columns=['ID', 'Treated Group', 'Treated Status', 'Treated Time', 'Laser Type'])
+                dataset['Untreated Status'] = (
+                    dataset['Untreated Status'] == 1).astype(bool)
+
+                dataset2 = dataset2.drop(
+                    columns=['ID', 'Untreated Group', 'Untreated Status', 'Untreated Time'])
+                dataset2['Treated Status'] = (
+                    dataset2['Treated Status'] == 1).astype(bool)
+
+                X = dataset.iloc[:, :-2]
+                X2 = dataset2.iloc[:, :-2]
+
+                X_data = {'Age': [json["age"]], 'Eye': [json["eye"]], 'Type': [
+                    json["diabetes_type"]], 'Untreated Group': [json["risk_untreated"]]}
+                X2_data = {'Age': [json["age"]], 'Laser Type': [json["laser_type"]], 'Eye': [
+                    json["eye"]], 'Type': [json["diabetes_type"]], 'Treated Group': [json["risk_treated"]]}
+                X_dataf = pd.DataFrame(data=X_data)
+                X2_dataf = pd.DataFrame(data=X2_data)
+                X_dataf = X_dataf.append(X)
+                X2_dataf = X2_dataf.append(X2)
+
+                non_dummy_cols = ['Age']
+                dummy_cols = list(set(X_dataf.columns) - set(non_dummy_cols))
+                X_dataf = pd.get_dummies(X_dataf, columns=dummy_cols)
+
+                dummy_cols2 = list(set(X2_dataf.columns) - set(non_dummy_cols))
+                X2_dataf = pd.get_dummies(X2_dataf, columns=dummy_cols2)
+
+                dataUT = X_dataf.iloc[:1]
+                dataTR = X2_dataf.iloc[:1]
+                print("2")
+                print(dataUT)
+                print(dataTR)
+            except:
+                return '{"type":"error","response":"Invalid request, please try again."}'
         elif(json["type"] == 3):
             if("content" not in json or json["content"] == ""):
                 return '{"type":"error","response":"Report field must not be left blank."}'
-            output = summarizer(json["content"], num_sentences=3)
+
+            if("sentences" not in json or json["sentences"] == ""):
+                return '{"type":"error","response":"Sentences field must not be left blank."}'
+            json["sentences"] = int(json["sentences"])
+            if(json["sentences"] < 2):
+                json["sentences"] = 2
+
+            output = summarizer(
+                json["content"], num_sentences=json["sentences"])
             return '{"type":"success","response":"' + output + '"}'
         else:
             return '{"type":"error","response":"Invalid request, please try again."}'

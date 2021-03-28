@@ -395,7 +395,13 @@
 						<div class="mt-10">
 							<textarea class="single-textarea" placeholder="Report" onfocus="this.placeholder = ''"
 							onblur="this.placeholder = 'Report'" name="content" required></textarea>
-						</div>`;
+						</div><br>
+						<p><b>Number of Sentences:</b></p>
+						<div class="mt-10">
+							<input type="number" min="2" placeholder="Number of Sentences" value="3" name="sentences"
+							onfocus="this.placeholder = ''" onblur="this.placeholder = 'Number of Sentences'" required
+							class="single-input">
+						</div><br>`;
 					submitButton.innerHTML = "Summarize";
 					submitButton.style.display = "";
 					textError.innerHTML = "";
@@ -414,6 +420,7 @@
 			}
 			
 			submitButton.onclick = async () => {
+				textError.innerHTML = "";
 				let elements = document.querySelectorAll("#form > div");
 				let data = {
 					type: currentType,
