@@ -222,7 +222,6 @@
 				color: #000000;
 				border-radius: 10px;
 				margin: 10px;
-				cursor: pointer;
 				transition: background-color 0.25s ease-in-out,
 							color 0.25s ease-in-out;
 			}
@@ -238,12 +237,15 @@
 			}
 			.record-1 {
 				border: 3px solid #f4e700;
+				cursor: pointer;
 			}
 			.record-2 {
 				border: 3px solid #f44a40;
+				cursor: pointer;
 			}
 			.record-3 {
 				border: 3px solid #38a4ff;
+				cursor: pointer;
 			}
 			.record-1:hover {
 				background-color: #f4e700;
@@ -349,7 +351,8 @@
 						if(latestKey == "1") {
 							return `<p><b>Diabetic Retinopathy Image:</b> ${latest[latestKey].result}</p><br>`;
 						} else if(latestKey == "2") {
-							return `<p><b>Time Until Blind:</b></p><br><img src="${latest[latestKey].result}" style="width: calc(100% - 50px);" /><br>`;
+							return `<p><b>Time Until Blind:</b><br>Orange: Treated<br>Blue: Untreated</p><br>
+							<img src="${latest[latestKey].result}" style="width: calc(100% - 50px);" /><br>`;
 						} else if(latestKey == "3") {
 							return `<p><b>Report Summary:</b> ${latest[latestKey].result}</p><br>`;
 						}
