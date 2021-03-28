@@ -80,6 +80,8 @@ def add():
         return render_template('add.html')
     else:
         json = request.json
+        if("patient" not in json or json["patient"] == ""):
+            return '{"type":"error","response":"Patient name field must not be left blank."}'
         if(json["type"] == 1):
             if("image" not in json or json["image"] == ""):
                 return '{"type":"error","response":"Image field must not be left blank."}'

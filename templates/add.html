@@ -306,7 +306,13 @@
 					window.location.hash = "#" + type;
 				}
 				if(type == 1) {
-					form.innerHTML = `<p><b>Image:</b></p>
+					form.innerHTML = `<p><b>Patient Name:</b></p>
+						<div class="mt-10">
+							<input type="text" placeholder="Patient Name" name="patient"
+							onfocus="this.placeholder = ''" onblur="this.placeholder = 'Patient Name'" required
+							class="single-input">
+						</div><br>
+						<p><b>Image:</b></p>
 						<div class="mt-10">
 							<input type="file" required class="single-input" name="image" />
 						</div>`;
@@ -314,7 +320,13 @@
 						submitButton.style.display = "";
 						textError.style.display = "";
 				} else if(type == 2) {
-					form.innerHTML = `<p><b>Laser Type:</b></p>
+					form.innerHTML = `<p><b>Patient Name:</b></p>
+						<div class="mt-10">
+							<input type="text" placeholder="Patient Name" name="patient"
+							onfocus="this.placeholder = ''" onblur="this.placeholder = 'Patient Name'" required
+							class="single-input">
+						</div><br>
+						<p><b>Laser Type:</b></p>
 						<div class="input-group-icon mt-10">
 							<div class="icon"><i class="fas fa-eye" aria-hidden="true"></i></div>
 							<div class="form-select">
@@ -391,7 +403,13 @@
 					textError.innerHTML = "";
 					textError.style.display = "";
 				} else if(type == 3) {
-					form.innerHTML = `<p><b>Report:</b></p>
+					form.innerHTML = `<p><b>Patient Name:</b></p>
+						<div class="mt-10">
+							<input type="text" placeholder="Patient Name" name="patient"
+							onfocus="this.placeholder = ''" onblur="this.placeholder = 'Patient Name'" required
+							class="single-input">
+						</div><br>
+						<p><b>Report:</b></p>
 						<div class="mt-10">
 							<textarea class="single-textarea" placeholder="Report" onfocus="this.placeholder = ''"
 							onblur="this.placeholder = 'Report'" name="content" required></textarea>
