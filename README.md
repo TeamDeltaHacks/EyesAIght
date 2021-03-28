@@ -10,7 +10,7 @@ Additionally, you may need to use `pip install` to install the dependencies on e
 ## Running
 To run the code, open a terminal and navigate to the root directory of this repository. Then, run the following commands:
 ```bash
-export FLASK_APP=hello.py
+export FLASK_APP=app.py
 flask run
 ```
 
