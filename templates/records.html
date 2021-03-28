@@ -286,7 +286,7 @@
 							if(el.type == 1) {
 								return `
 									<div class="record record-1" onclick="window.location.href = '/records/${id}';">
-										<center><h3>Diabetic Retinopathy Image</h3></center>
+										<center><h3>[${el.patient}] Diabetic Retinopathy Image</h3></center>
 										<p>${el.result}</p>
 										<p>${new Date(el.createdAt.seconds * 1000).toLocaleDateString()} ${new Date(el.createdAt.seconds * 1000).toLocaleTimeString()}</p>
 									</div>
@@ -294,7 +294,7 @@
 							} else if(el.type == 2) {
 								return `
 									<div class="record record-2" onclick="window.location.href = '/records/${id}';">
-										<center><h3>Time Until Blind</h3></center>
+										<center><h3>[${el.patient}] Time Until Blind</h3></center>
 										<p>${el.result}</p>
 										<p>${new Date(el.createdAt.seconds * 1000).toLocaleDateString()} ${new Date(el.createdAt.seconds * 1000).toLocaleTimeString()}</p>
 									</div>
@@ -302,7 +302,7 @@
 							} else if(el.type == 3) {
 								return `
 									<div class="record record-3" onclick="window.location.href = '/records/${id}';">
-										<center><h3>Report Summary</h3></center>
+										<center><h3>[${el.patient}] Report Summary</h3></center>
 										<p>${el.result}</p>
 										<p>${new Date(el.createdAt.seconds * 1000).toLocaleDateString()} ${new Date(el.createdAt.seconds * 1000).toLocaleTimeString()}</p>
 									</div>

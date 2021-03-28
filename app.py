@@ -173,8 +173,13 @@ def add():
                     json["diabetes_type"]], 'Untreated Group': [json["risk_untreated"]]}
                 X2_data = {'Age': [json["age"]], 'Laser Type': [json["laser_type"]], 'Eye': [
                     json["eye"]], 'Type': [json["diabetes_type"]], 'Treated Group': [json["risk_treated"]]}
+                filler = {'Age': [12], 'Eye': [1],
+                          'Type': [2], 'Untreated Group': [7]}
                 X_dataf = pd.DataFrame(data=X_data)
                 X2_dataf = pd.DataFrame(data=X2_data)
+                filler_f = pd.DataFrame(data=filler)
+
+                X_dataf = X_dataf.append(filler_f)
                 X_dataf = X_dataf.append(X)
                 X2_dataf = X2_dataf.append(X2)
 
@@ -187,13 +192,22 @@ def add():
 
                 dataUT = X_dataf.iloc[:1]
                 dataTR = X2_dataf.iloc[:1]
-
+                print(X_dataf.columns)
+                print(X2_dataf.columns)
+                print(dataUT)
+                print(dataTR)
+                print("0")
                 surv_funcs[0] = survival_UT.predict_survival_function(dataUT)
+                print("0.1")
                 surv_funcs2[0] = survival_TR.predict_survival_function(dataTR)
+                print("0.2")
 
+                print("1")
                 plot = plot_png()
+                print("2")
                 print(plot)
-            except:
+            except Exception as e:
+                print(e)
                 return '{"type":"error","response":"Invalid request, please try again."}'
         elif(json["type"] == 3):
             if("content" not in json or json["content"] == ""):
