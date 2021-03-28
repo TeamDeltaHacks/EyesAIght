@@ -16,6 +16,8 @@ from sksurv.linear_model import CoxnetSurvivalAnalysis
 survival_TR = load('coxnetTR.joblib')
 survival_UT = load('coxnetUT.joblib')
 
+summarizer = Summarizer()
+
 dr_weights = load_model("dr_weights.h5")
 
 app = Flask(__name__)
@@ -57,6 +59,7 @@ def add():
             result = dr_weights.predict(image_tensor)[0]
             highestVal = 0
             highestIndex = 0
+            print(result)
             for index, value in enumerate(result):
                 if(value > highestVal):
                     highestVal = value
@@ -77,6 +80,8 @@ def add():
         elif(json["type"] == 3):
             if("content" not in json or json["content"] == ""):
                 return '{"type":"error","response":"Report field must not be left blank."}'
+            output = summarizer(json["content"], num_sentences=3)
+            return '{"type":"success","response":"' + output + '"}'
         else:
             return '{"type":"error","response":"Invalid request, please try again."}'
         return '{"type":"success","response":"result"}'
