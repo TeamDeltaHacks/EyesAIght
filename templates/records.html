@@ -273,9 +273,13 @@
 					.where("uid", "==", user.uid)
 					.orderBy("createdAt")
 					.onSnapshot((snapshot) => {
+						let names = new Set();
 						let unorderedElements = snapshot.docs.map((document) => {
+							names.add(document.data().patient);
 							return {data: document.data(), id: document.id};
 						});
+						names = [...names];
+						console.log(names);
 						let elements = Array(unorderedElements.length);
 						for(let i = 0; i < unorderedElements.length; i++) {
 							elements[elements.length - i - 1] = unorderedElements[i];
@@ -295,7 +299,7 @@
 								return `
 									<div class="record record-2" onclick="window.location.href = '/records/${id}';">
 										<center><h3>[${el.patient}] Time Until Blind</h3></center>
-										<p>${el.result}</p>
+										<img src="${el.result}" style="width: calc(100% - 50px);" />
 										<p>${new Date(el.createdAt.seconds * 1000).toLocaleDateString()} ${new Date(el.createdAt.seconds * 1000).toLocaleTimeString()}</p>
 									</div>
 								`;
@@ -308,6 +312,9 @@
 									</div>
 								`;
 							}
+						});
+						names = names.map((name) => {
+							
 						});
 						container.innerHTML = "<center>" + domEls.join("") + "</center>";
 					});

@@ -278,21 +278,23 @@
 						if(data.type == 1) {
 							container.innerHTML = `
 								<center><div class="record record-1">
-									<h3>Diabetic Retinopathy Image</h3>
+									<h3>[${data.patient}] Diabetic Retinopathy Image</h3>
 									<p><b>Result:</b> ${data.result}</p><br>
 									<p><b>Image:</b></p><br>
-									<img src="${data.image}" width="250px" />
+									<img src="${data.image}" style="width: calc(100% - 50px);" />
 									<p>&nbsp;</p>
 									<p><b>Created at:</b> ${new Date(data.createdAt.seconds * 1000).toLocaleDateString()} ${new Date(data.createdAt.seconds * 1000).toLocaleTimeString()}</p><br>
 									<a href="/records" class="genric-btn warning">&lt; Back</a>
 								</div></center>
 							`;
-							document.getElementById("records-title").innerHTML = "Diabetic Retinopathy Image";
+							document.getElementById("records-title").innerHTML = `[${data.patient}] Diabetic Retinopathy Image`;
 						} else if(data.type == 2) {
 							container.innerHTML = `
 								<center><div class="record record-2">
-									<h3>Time Until Blind</h3>
-									<p><b>Result:</b> ${data.result}</p><br>
+									<h3>[${data.patient}] Time Until Blind</h3>
+									<p><b>Result:</b></p><br>
+									<img src="${data.result}" style="width: calc(100% - 50px);" />
+									<p>&nbsp;</p>
 									<p><b>Laser Type:</b> ${data.laser_type == 1 ? "Xenon" : "Argon"}</p><br>
 									<p><b>Treated Eye:</b> ${data.eye == 1 ? "Right" : "Left"}</p><br>
 									<p><b>Age at Diagnosis of Diabetes:</b> ${data.age}</p><br>
@@ -303,18 +305,18 @@
 									<a href="/records" class="genric-btn danger">&lt; Back</a>
 								</div></center>
 							`;
-							document.getElementById("records-title").innerHTML = "Time Until Blind";
+							document.getElementById("records-title").innerHTML = `[${data.patient}] Time Until Blind`;
 						} else if(data.type == 3) {
 							container.innerHTML = `
 								<center><div class="record record-3">
-									<h3>Report Summary</h3>
+									<h3>[${data.patient}] Report Summary</h3>
 									<p><b>Result:</b> ${data.result}</p><br>
 									<p><b>Content:</b> ${data.content}</p><br>
 									<p><b>Created at:</b> ${new Date(data.createdAt.seconds * 1000).toLocaleDateString()} ${new Date(data.createdAt.seconds * 1000).toLocaleTimeString()}</p><br>
 									<a href="/records" class="genric-btn info">&lt; Back</a>
 								</div></center>
 							`;
-							document.getElementById("records-title").innerHTML = "Report Summary";
+							document.getElementById("records-title").innerHTML = `[${data.patient}] Report Summary`;
 						}
 					});
 				resolvedCredentials = true;

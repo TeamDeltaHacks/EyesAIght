@@ -16,6 +16,7 @@ from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 import matplotlib.pyplot as plt
 from matplotlib.figure import Figure
 import io
+import base64
 
 
 survival_TR = load('coxnetTR.joblib')
@@ -52,7 +53,7 @@ def plot_png():
     fig = create_figure()
     output = io.BytesIO()
     FigureCanvas(fig).print_png(output)
-    return output.getvalue()
+    return "data:image/png;base64," + base64.b64encode(output.getvalue()).decode()
 
 
 app = Flask(__name__)
@@ -143,6 +144,10 @@ def add():
                 json["risk_untreated"] = int(json["risk_untreated"])
                 if(json["risk_untreated"] < 6 or json["risk_untreated"] > 12):
                     return '{"type":"error","response":"Untreated risk field must not be left blank."}'
+                if(json['risk_untreated'] == 7):
+                    json['risk_untreated'] = 6
+                if(json['risk_treated'] == 7):
+                    json['risk_treated'] = 6
 
                 if("risk_treated" not in json or json["risk_treated"] == ""):
                     return '{"type":"error","response":"Treated risk field must not be left blank."}'
@@ -173,13 +178,9 @@ def add():
                     json["diabetes_type"]], 'Untreated Group': [json["risk_untreated"]]}
                 X2_data = {'Age': [json["age"]], 'Laser Type': [json["laser_type"]], 'Eye': [
                     json["eye"]], 'Type': [json["diabetes_type"]], 'Treated Group': [json["risk_treated"]]}
-                filler = {'Age': [12], 'Eye': [1],
-                          'Type': [2], 'Untreated Group': [7]}
                 X_dataf = pd.DataFrame(data=X_data)
                 X2_dataf = pd.DataFrame(data=X2_data)
-                filler_f = pd.DataFrame(data=filler)
 
-                X_dataf = X_dataf.append(filler_f)
                 X_dataf = X_dataf.append(X)
                 X2_dataf = X2_dataf.append(X2)
 
@@ -192,20 +193,12 @@ def add():
 
                 dataUT = X_dataf.iloc[:1]
                 dataTR = X2_dataf.iloc[:1]
-                print(X_dataf.columns)
-                print(X2_dataf.columns)
-                print(dataUT)
-                print(dataTR)
-                print("0")
-                surv_funcs[0] = survival_UT.predict_survival_function(dataUT)
-                print("0.1")
-                surv_funcs2[0] = survival_TR.predict_survival_function(dataTR)
-                print("0.2")
 
-                print("1")
+                surv_funcs[0] = survival_UT.predict_survival_function(dataUT)
+                surv_funcs2[0] = survival_TR.predict_survival_function(dataTR)
+
                 plot = plot_png()
-                print("2")
-                print(plot)
+                return '{"type":"success","response":"' + plot + '"}'
             except Exception as e:
                 print(e)
                 return '{"type":"error","response":"Invalid request, please try again."}'
