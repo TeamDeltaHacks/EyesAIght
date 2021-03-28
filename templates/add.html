@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="x-ua-compatible" content="ie=edge">
-	<title>sAIght | Add Record</title>
+	<title>EyesAIght | Add Record</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="shortcut icon" type="image/x-icon" href="/static/assets/img/favicon.ico">
@@ -166,7 +166,7 @@
 								<div class="form" id="form" style="margin-bottom: 10px;">
 									
 								</div>
-								<div class="genric-btn primary" id="btn-submit">Submit</div>
+								<div class="genric-btn primary" id="btn-submit"></div>
 							</center>
 							<p id="text-error" style="color: #ff0000; margin-top:10px;"></p>
 						</div>
@@ -310,6 +310,7 @@
 						<div class="mt-10">
 							<input type="file" required class="single-input" />
 						</div>`;
+						submitButton.innerHTML = "Predict";
 						submitButton.style.display = "";
 						textError.style.display = "";
 				} else if(type == 2) {
@@ -385,6 +386,7 @@
 							</div>
 						</div><br>
 					</div>`;
+					submitButton.innerHTML = "Predict";
 					submitButton.style.display = "";
 					textError.style.display = "";
 				} else if(type == 3) {
@@ -393,12 +395,14 @@
 							<textarea class="single-textarea" placeholder="Report" onfocus="this.placeholder = ''"
 							onblur="this.placeholder = 'Report'" required></textarea>
 						</div>`;
+					submitButton.innerHTML = "Summarize";
 					submitButton.style.display = "";
 					textError.style.display = "";
 				} else {
 					form.innerHTML = ``;
 					submitButton.style.display = "none";
 					textError.style.display = "none";
+					submitButton.innerHTML = "";
 				}
 				let nice_Select = $('select');
 				if(nice_Select.length){

@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="x-ua-compatible" content="ie=edge">
-	<title>sAIght | Record</title>
+	<title>EyesAIght | Record</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="shortcut icon" type="image/x-icon" href="/static/assets/img/favicon.ico">
@@ -299,10 +299,12 @@
 								<center><div class="record record-2">
 									<h3>Time Until Blind</h3>
 									<p><b>Result:</b> ${data.result}</p><br>
-									<p><b>Age:</b> ${data.age}</p><br>
-									<p><b>Diabetes Type:</b> ${data.diabetes_type}</p><br>
-									<p><b>Risk Group:</b> ${data.risk}</p><br>
-									<p><b>Eye:</b> ${data.eye == 1 ? "right" : "left"}</p><br>
+									<p><b>Laser Type:</b> ${data.laser_type == 1 ? "Xenon" : "Argon"}</p><br>
+									<p><b>Treated Eye:</b> ${data.eye == 1 ? "Right" : "Left"}</p><br>
+									<p><b>Age at Diagnosis of Diabetes:</b> ${data.age}</p><br>
+									<p><b>Type of Diabetes:</b> ${data.diabetes_type == 1 ? "Juvenile (age at dx < 20)" : "Adult"}</p><br>
+									<p><b>Untreated Risk Group:</b> ${data.risk_untreated}</p><br>
+									<p><b>Treated Risk Group:</b> ${data.risk_treated}</p><br>
 									<p><b>Created at:</b> ${new Date(data.createdAt.seconds * 1000).toLocaleDateString()} ${new Date(data.createdAt.seconds * 1000).toLocaleTimeString()}</p><br>
 									<a href="/records" class="genric-btn danger">&lt; Back</a>
 								</div></center>
