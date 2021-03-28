@@ -14,4 +14,4 @@ export FLASK_APP=hello.py
 flask run
 ```
 
-Then, navigate to `localhost:5000` in your browser. Enjoy!
+Finally, navigate to `localhost:5000` in your browser. Enjoy!
