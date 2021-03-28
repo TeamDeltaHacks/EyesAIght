@@ -37,8 +37,8 @@ def add():
     if(request.method == 'GET'):
         return render_template('add.html')
     else:
-        print(request)
-        return 0
+        print(request.json)
+        return "0"
 
 
 @app.route('/register', methods=['GET'])

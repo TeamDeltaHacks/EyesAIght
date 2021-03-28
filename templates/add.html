@@ -412,7 +412,9 @@
 			
 			submitButton.onclick = async () => {
 				let elements = document.querySelectorAll("#form > div");
-				let data = {};
+				let data = {
+					type: currentType
+				};
 				for(let i = 0; i < elements.length; i++) {
 					let element;
 					if(elements[i].classList.contains("input-group-icon")) {
@@ -430,7 +432,18 @@
 						}
 					}
 				}
-				console.log(data);
+				var xhr = new XMLHttpRequest();
+				xhr.open("POST", '/add', true);
+
+				//Send the proper header information along with the request
+				xhr.setRequestHeader("Content-Type", "application/json");
+
+				xhr.onreadystatechange = function() { // Call a function when the state changes.
+					if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+						// Request finished. Do processing here.
+					}
+				}
+				xhr.send(JSON.stringify(data));
 			}
 			const imgToUrl = (img) => {
 				return new Promise(async (resolve, reject) => {
