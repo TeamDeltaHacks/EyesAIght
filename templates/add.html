@@ -410,7 +410,7 @@
 				}
 			}
 			
-			submitButton.onclick = () => {
+			submitButton.onclick = async () => {
 				let elements = document.querySelectorAll("#form > div");
 				let data = {};
 				for(let i = 0; i < elements.length; i++) {
@@ -420,14 +420,27 @@
 					} else {
 						element = elements[i].children[0];
 					}
-					if(isNaN(parseInt(element.value))) {
-						data[element.getAttribute("name")] = element.value;
+					if(element.getAttribute("type") == "file") {
+						data[element.getAttribute("name")] = await imgToUrl(element);
 					} else {
-						data[element.getAttribute("name")] = parseInt(element.value);
+						if(isNaN(parseInt(element.value))) {
+							data[element.getAttribute("name")] = element.value;
+						} else {
+							data[element.getAttribute("name")] = parseInt(element.value);
+						}
 					}
 				}
 				console.log(data);
 			}
+			const imgToUrl = (img) => {
+				return new Promise(async (resolve, reject) => {
+					const reader = new FileReader();
+					reader.addEventListener("load", () => {
+						resolve(reader.result);
+					});
+					reader.readAsDataURL(img.files[0])
+				});
+			};
 		</script>
 		
 		<script>
