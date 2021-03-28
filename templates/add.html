@@ -317,7 +317,7 @@
 					form.innerHTML = `<p><b>Laser Type:</b></p>
 						<div class="input-group-icon mt-10">
 							<div class="icon"><i class="fas fa-eye" aria-hidden="true"></i></div>
-							<div class="form-select" id="default-select"">
+							<div class="form-select">
 								<select>
 									<option value="0">Choose a laser type...</option>
 									<option value="1">Xenon</option>
@@ -328,7 +328,7 @@
 						<p><b>Treated Eye:</b></p>
 						<div class="input-group-icon mt-10">
 							<div class="icon"><i class="fas fa-eye" aria-hidden="true"></i></div>
-							<div class="form-select" id="default-select"">
+							<div class="form-select">
 								<select>
 									<option value="0">Choose a treated eye...</option>
 									<option value="1">Right</option>
@@ -345,7 +345,7 @@
 						<p><b>Type of Diabetes:</b></p>
 						<div class="input-group-icon mt-10">
 							<div class="icon"><i class="fas fa-eye" aria-hidden="true"></i></div>
-							<div class="form-select" id="default-select"">
+							<div class="form-select">
 								<select>
 									<option value="0">Choose a type of diabetes...</option>
 									<option value="1">Juvenile (age at dx < 20)</option>
@@ -356,7 +356,7 @@
 						<p><b>Untreated Risk Group:</b></p>
 						<div class="input-group-icon mt-10">
 							<div class="icon"><i class="fas fa-eye" aria-hidden="true"></i></div>
-							<div class="form-select" id="default-select"">
+							<div class="form-select">
 								<select>
 									<option value="0">Choose an untreated risk group...</option>
 									<option value="6">6</option>
@@ -372,7 +372,7 @@
 						<p><b>Treated Risk Group:</b></p>
 						<div class="input-group-icon mt-10">
 							<div class="icon"><i class="fas fa-eye" aria-hidden="true"></i></div>
-							<div class="form-select" id="default-select"">
+							<div class="form-select">
 								<select>
 									<option value="0">Choose a treated risk group...</option>
 									<option value="6">6</option>
@@ -411,7 +411,8 @@
 			}
 			
 			submitButton.onclick = () => {
-				console.log(currentType);
+				let elements = document.querySelectorAll("#form > div");
+
 			}
 		</script>
 		

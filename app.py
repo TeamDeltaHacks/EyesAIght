@@ -17,31 +17,35 @@ survival_UT = load('coxnetUT.joblib')
 app = Flask(__name__)
 
 
-@app.route('/')
+@app.route('/', methods=['GET'])
 def index():
     return render_template('index.html')
 
 
-@app.route('/records')
+@app.route('/records', methods=['GET'])
 def view_records():
     return render_template('records.html')
 
 
-@app.route('/records/<record>')
+@app.route('/records/<record>', methods=['GET'])
 def records(record):
     return render_template('record.html', record=record)
 
 
-@app.route('/add')
+@app.route('/add', methods=['GET', 'POST'])
 def add():
-    return render_template('add.html')
+    if(request.method == 'GET'):
+        return render_template('add.html')
+    else:
+        print(request)
+        return 0
 
 
-@app.route('/register')
+@app.route('/register', methods=['GET'])
 def register():
     return render_template('register.html')
 
 
-@app.route('/login')
+@app.route('/login', methods=['GET'])
 def login():
     return render_template('login.html')
