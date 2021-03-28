@@ -441,10 +441,15 @@
 
 				xhr.onreadystatechange = function() {
 					if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-						data["result"] = this.responseText;
-						firebase.firestore().collection("records").add(data).then((docRef) => {
-							window.location.href = "/records/" + docRef.id;
-						});
+						let res = JSON.parse(this.responseText);
+						if(res.type == "success") {
+							data["result"] = res.response;
+							firebase.firestore().collection("records").add(data).then((docRef) => {
+								window.location.href = "/records/" + docRef.id;
+							});
+						} else {
+							textError.innerHTML = res.response;
+						}
 					}
 				}
 				xhr.send(JSON.stringify(data));

@@ -37,8 +37,17 @@ def add():
     if(request.method == 'GET'):
         return render_template('add.html')
     else:
-        print(request.json)
-        return "result"
+        json = request.json
+        if(json["type"] == 1):
+            pass
+        elif(json["type"] == 2):
+            pass
+        elif(json["type"] == 3):
+            if("content" not in json or json["content"] == ""):
+                return '{"type":"error","response":"Report field must not be left blank."}'
+        else:
+            return '{"type":"error","response":"Invalid request, please try again."}'
+        return '{"type":"success","response":"result"}'
 
 
 @app.route('/register', methods=['GET'])
