@@ -388,6 +388,7 @@
 					</div>`;
 					submitButton.innerHTML = "Predict";
 					submitButton.style.display = "";
+					textError.innerHTML = "";
 					textError.style.display = "";
 				} else if(type == 3) {
 					form.innerHTML = `<p><b>Report:</b></p>
@@ -397,11 +398,13 @@
 						</div>`;
 					submitButton.innerHTML = "Summarize";
 					submitButton.style.display = "";
+					textError.innerHTML = "";
 					textError.style.display = "";
 				} else {
 					form.innerHTML = ``;
 					submitButton.style.display = "none";
 					textError.style.display = "none";
+					textError.innerHTML = "";
 					submitButton.innerHTML = "";
 				}
 				let nice_Select = $('select');
@@ -460,7 +463,11 @@
 					reader.addEventListener("load", () => {
 						resolve(reader.result);
 					});
-					reader.readAsDataURL(img.files[0])
+					try {
+						reader.readAsDataURL(img.files[0])
+					} catch(err) {
+						resolve("");
+					}
 				});
 			};
 		</script>
