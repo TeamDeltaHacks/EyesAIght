@@ -1,6 +1,6 @@
 # EyesAIght
 
-Revolutionizing the ophthalmology field using Machine Learning
+Revolutionizing the Ophthalmology Field using Machine Learning
 
 <br/>
 <b>
